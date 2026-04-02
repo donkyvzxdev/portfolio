@@ -1112,11 +1112,12 @@ section {
     font-size: 15px;
     font-weight: 600;
     margin-bottom: 4px;
+    color: var(--green-secondary);
 }
 
 .contact-info p {
     font-size: 13px;
-    color: var(--text-tertiary);
+    color: var(--text-secondary);
     word-break: break-all;
 }
 
