@@ -14,6 +14,23 @@ const revealOnScroll = () => {
 window.addEventListener('scroll', revealOnScroll);
 window.addEventListener('load', revealOnScroll);
 
+const menuToggle = document.querySelector('.menu-toggle');
+if (menuToggle) {
+    menuToggle.addEventListener('click', () => {
+        menuToggle.classList.toggle('active');
+        document.body.classList.toggle('menu-open');
+    });
+
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+            if (window.innerWidth <= 768) {
+                menuToggle.classList.remove('active');
+                document.body.classList.remove('menu-open');
+            }
+        });
+    });
+}
+
 // Nav pill sliding
 const navLinks = document.querySelectorAll('.nav-link');
 const navPill = document.querySelector('.nav-pill');
