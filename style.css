@@ -1409,6 +1409,14 @@ footer .heart {
         max-width: 100%;
     }
 
+    .contact-info h4 {
+        color: var(--green-secondary);
+    }
+
+    .contact-info p {
+        color: var(--text-secondary);
+    }
+
     .floating-badge {
         display: none;
     }
