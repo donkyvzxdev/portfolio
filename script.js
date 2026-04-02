@@ -15,17 +15,29 @@ window.addEventListener('scroll', revealOnScroll);
 window.addEventListener('load', revealOnScroll);
 
 const menuToggle = document.querySelector('.menu-toggle');
+const nav = document.querySelector('nav');
+const navOverlay = document.querySelector('.nav-overlay');
 if (menuToggle) {
     menuToggle.addEventListener('click', () => {
         menuToggle.classList.toggle('active');
-        document.body.classList.toggle('menu-open');
+        nav.classList.toggle('open');
+        navOverlay.classList.toggle('visible');
     });
+
+    if (navOverlay) {
+        navOverlay.addEventListener('click', () => {
+            menuToggle.classList.remove('active');
+            nav.classList.remove('open');
+            navOverlay.classList.remove('visible');
+        });
+    }
 
     document.querySelectorAll('.nav-link').forEach(link => {
         link.addEventListener('click', () => {
             if (window.innerWidth <= 768) {
                 menuToggle.classList.remove('active');
-                document.body.classList.remove('menu-open');
+                nav.classList.remove('open');
+                navOverlay.classList.remove('visible');
             }
         });
     });
@@ -35,7 +47,6 @@ if (menuToggle) {
 const navLinks = document.querySelectorAll('.nav-link');
 const navPill = document.querySelector('.nav-pill');
 const navUl = document.querySelector('nav ul');
-const nav = document.querySelector('nav');
 let activeLink = navLinks[0];
 
 function positionPill(link) {
@@ -62,7 +73,30 @@ nav.addEventListener('mouseleave', () => {
 window.addEventListener('load', () => {
     if (navLinks.length > 0) {
         navPill.style.transition = 'none';
-        positionPill(navLinks[0]);
+
+        const scrollY = window.scrollY;
+        let currentSection = null;
+
+        sections.forEach(section => {
+            const top = section.offsetTop;
+            const bottom = top + section.offsetHeight;
+            if (scrollY >= top - 100 && scrollY < bottom - 100) {
+                currentSection = section.getAttribute('id');
+            }
+        });
+
+        if (currentSection) {
+            const activeLinkEl = document.querySelector(`nav a[href="#${currentSection}"]`);
+            if (activeLinkEl) {
+                positionPill(activeLinkEl);
+                navItems.forEach(item => item.classList.remove('active'));
+                activeLinkEl.classList.add('active');
+                activeLink = activeLinkEl;
+            }
+        } else {
+            positionPill(navLinks[0]);
+        }
+
         requestAnimationFrame(() => {
             navPill.style.transition = 'left 0.35s cubic-bezier(0.4, 0, 0.2, 1), width 0.35s cubic-bezier(0.4, 0, 0.2, 1)';
         });

@@ -254,6 +254,22 @@ body {
     transform: rotate(-45deg) translate(5px, -5px);
 }
 
+.nav-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+}
+
+.nav-overlay.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
 nav {
     position: fixed;
     top: 24px;
@@ -539,7 +555,7 @@ section {
 
 .scroll-indicator {
     position: absolute;
-    bottom: 60px;
+    bottom: 30px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -680,7 +696,7 @@ section {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 40px;
+    padding: 10px;
 }
 
 .avatar-wrapper {
@@ -742,37 +758,38 @@ section {
 
 .floating-badge {
     position: absolute;
-    padding: 14px 20px;
-    background: rgba(12, 20, 18, 0.8);
+    padding: 10px 16px;
+    background: rgba(12, 20, 18, 0.85);
     backdrop-filter: blur(24px);
     border: 1px solid rgba(16, 185, 129, 0.12);
-    border-radius: 16px;
-    font-size: 13px;
+    border-radius: 14px;
+    font-size: 12px;
     font-weight: 500;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
     animation: float 6s ease-in-out infinite;
     white-space: nowrap;
+    z-index: 10;
 }
 
 .floating-badge .emoji {
-    margin-right: 8px;
+    margin-right: 6px;
 }
 
-.floating-badge:nth-child(1) {
-    top: 10px;
-    right: -30px;
+.badge-top-right {
+    top: 15%;
+    right: 0;
     animation-delay: 0s;
 }
 
-.floating-badge:nth-child(2) {
-    bottom: 70px;
-    left: -50px;
+.badge-bottom-left {
+    bottom: 15%;
+    left: 0;
     animation-delay: 2s;
 }
 
-.floating-badge:nth-child(3) {
+.badge-bottom-right {
     bottom: 0;
-    right: 30px;
+    right: 10%;
     animation-delay: 4s;
 }
 
@@ -1312,30 +1329,49 @@ footer .heart {
     }
 
     nav {
-        top: auto;
-        bottom: 0;
+        top: 0;
         left: 0;
         right: 0;
-        transform: none;
+        bottom: auto;
+        transform: translateY(-100%);
         border-radius: 0;
-        border-top: 1px solid rgba(255, 255, 255, 0.06);
-        border-left: none;
-        border-right: none;
-        border-bottom: none;
-        padding: 8px;
-        background: rgba(10, 15, 13, 0.95);
+        border: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        padding: 16px 24px 24px;
+        background: rgba(10, 15, 13, 0.97);
         backdrop-filter: blur(32px);
         -webkit-backdrop-filter: blur(32px);
+        transition: transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1), opacity 0.4s ease;
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    nav.open {
+        transform: translateY(0);
+        opacity: 1;
+        pointer-events: auto;
     }
 
     nav ul {
-        justify-content: space-around;
+        flex-direction: column;
+        gap: 4px;
         padding: 0;
     }
 
     nav a {
-        font-size: 12px;
-        padding: 10px 8px;
+        font-size: 15px;
+        padding: 14px 20px;
+        display: block;
+        border-radius: 12px;
+        text-align: center;
+    }
+
+    nav a:hover {
+        background: rgba(255, 255, 255, 0.04);
+    }
+
+    nav a.active {
+        background: rgba(16, 185, 129, 0.08);
     }
 
     .nav-pill {
@@ -1343,7 +1379,7 @@ footer .heart {
     }
 
     section {
-        padding: 80px 20px 120px;
+        padding: 80px 20px;
     }
 
     #inicio {
